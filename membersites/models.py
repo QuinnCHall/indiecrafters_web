@@ -7,3 +7,6 @@ class MemberSite(models.Model):
     website = models.URLField(blank=True, null=True)
     discord = models.URLField(blank=True, null=True)
     description = models.TextField()
+
+    def __str__(self):
+        return self.name
