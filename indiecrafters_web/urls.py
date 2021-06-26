@@ -16,6 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from membersites.views import homepage, list_sites, show_site
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', homepage, name='homepage'),
+    path('sites/', list_sites, name='list_sites'),
+    path('sites/<int:site_id>/<str:site_slug>/', show_site, name='show_site'),
 ]
