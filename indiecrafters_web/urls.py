@@ -15,12 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
-from membersites.views import homepage, list_sites, show_site
+from membersites.views import homepage, list_servers, show_server
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', homepage, name='homepage'),
-    path('sites/', list_sites, name='list_sites'),
-    path('sites/<int:site_id>/<str:site_slug>/', show_site, name='show_site'),
+    path('servers/', list_servers, name='list_servers'),
+    path('servers/<int:server_id>/<str:server_slug>/', show_server, name='show_server'),
 ]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

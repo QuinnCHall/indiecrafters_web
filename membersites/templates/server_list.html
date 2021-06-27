@@ -1,0 +1,8 @@
+<h2>Member Servers:</h2>
+<ul>
+{% for server in servers %}
+  <li><a href="{{server.get_absolute_url}}">
+  {% if server.card_header_url %}<img src="{{server.card_header_url}}" /><br/>{% endif %}
+  {{server.name}}</li>
+{% endfor %}
+</ul>
