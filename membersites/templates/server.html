@@ -1,0 +1,10 @@
+{% if server.page_header_url %}<img src="{{server.page_header_url}}" />{% endif %}
+<h2>{{server.name}}</h2>
+
+{% if server.webserver_url %}
+<p>
+    <a href="{{server.webserver_url}}" target="_blank">{{server.webserver_url}}</a>
+</p>
+{% endif %}
+
+<p>{{server.description}}</p>

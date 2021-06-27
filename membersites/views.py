@@ -1,20 +1,20 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from membersites.models import MemberSite
+from membersites.models import MemberServer
 
 # Create your views here.
 def homepage(request):
-    return redirect('list_sites')
+    return redirect('list_servers')
 
-def list_sites(request):
-    sites = MemberSite.objects.all()
+def list_servers(request):
+    servers = MemberServer.objects.all()
     context = {
-        'sites': sites,
+        'servers': servers,
     }
-    return render(request, 'sites_list.html', context)
+    return render(request, 'server_list.html', context)
 
-def show_site(request, site_id, site_slug):
-    site = get_object_or_404(MemberSite, id=site_id)
+def show_server(request, server_id, server_slug):
+    server = get_object_or_404(MemberServer, id=server_id)
     context = {
-        'site': site,
+        'server': server,
     }
-    return render(request, 'site.html', context)
+    return render(request, 'server.html', context)
