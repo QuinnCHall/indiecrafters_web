@@ -3,7 +3,11 @@ from membersites.models import MemberServer
 
 # Create your views here.
 def homepage(request):
-    return redirect('list_servers')
+    servers = MemberServer.objects.all()
+    context = {
+        'servers': servers,
+    }
+    return render(request, 'index.html', context)
 
 def list_servers(request):
     servers = MemberServer.objects.all()
