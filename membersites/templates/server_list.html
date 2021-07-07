@@ -1,3 +1,8 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="page-section" id="servers">
 <h2>Member Servers:</h2>
 <ul>
 {% for server in servers %}
@@ -6,3 +11,5 @@
   {{server.name}}</li>
 {% endfor %}
 </ul>
+</section>
+{% endblock %}
