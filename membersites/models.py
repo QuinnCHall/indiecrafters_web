@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib.staticfiles import finders as staticfiles_finders
 from django.core.files import File
+from django import forms
 
 import os
 import random
@@ -58,15 +59,21 @@ class Member(models.Model):
     def __str__(self):
         return self.user.username
 
+class ApprovalStatus(models.TextChoices):
+    PENDING = 'pending', 'Pending'
+    APPROVED = 'approved', 'Approved'
+    REJECTED = 'rejected', 'Rejected'
+
 class MemberServer(models.Model):
     owner = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=False)
     name = models.CharField(max_length=256)
+    status = models.CharField(max_length=16, choices=ApprovalStatus.choices, default=ApprovalStatus.PENDING)
     server_url = models.CharField(max_length=256, blank=True, null=True)
     website_url = models.CharField(max_length=256, blank=True, null=True)
     discord_url = models.URLField(blank=True, null=True)
     description = models.TextField()
     #default_picture = models.CharField(max_length=256, blank=True, null=True)
-    profile_picture = models.ImageField(upload_to='server/profiles', null=True, blank=True)
+    profile_picture = models.ImageField(verbose_name='Server Screenshot', upload_to='server/profiles', null=True, blank=True)
     card_header = imagekit.models.ImageSpecField(source='profile_picture', spec=CardHeader)
     page_header = imagekit.models.ImageSpecField(source='profile_picture', spec=PageHeader)
 
@@ -101,3 +108,8 @@ class MemberServer(models.Model):
             file = File(open(filepath, "rb"))
             file_name = os.path.basename(file.name)
             self.profile_picture.save(file_name, file, save=True)
+
+class MemberServerForm(forms.ModelForm):
+    class Meta:
+        model = MemberServer
+        exclude = ['owner', 'status']

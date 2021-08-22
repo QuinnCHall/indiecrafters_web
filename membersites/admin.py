@@ -5,7 +5,10 @@ from membersites.models import *
 
 # Register your models here.
 class MemberServerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'header')
+    list_display = ('name', 'header', 'status')
+    list_filter = ('status',)
+    actions = ('approve', 'reject')
+
     def header(self, server):
         if server.profile_picture:
             return mark_safe(
@@ -14,6 +17,15 @@ class MemberServerAdmin(admin.ModelAdmin):
         else:
             return 'None'
     header.short_description = "Header"
+
+    def approve(self, request, queryset):
+        queryset.update(status=ApprovalStatus.APPROVED)
+    approve.short_description = 'Approve Servers'
+        
+    def reject(self, request, queryset):
+        queryset.update(status=ApprovalStatus.REJECTED)
+    reject.short_description = 'Reject Servers'
+        
 admin.site.register(MemberServer, MemberServerAdmin)
 
 class MemberAdmin(admin.ModelAdmin):
