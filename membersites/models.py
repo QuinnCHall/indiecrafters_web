@@ -66,7 +66,7 @@ class ApprovalStatus(models.TextChoices):
 
 class MemberServer(models.Model):
     owner = models.ForeignKey(Member, on_delete=models.SET_NULL, null=True, blank=False)
-    name = models.CharField(max_length=256)
+    name = models.CharField(max_length=256, verbose_name='Server Name')
     status = models.CharField(max_length=16, choices=ApprovalStatus.choices, default=ApprovalStatus.PENDING)
     server_url = models.CharField(max_length=256, blank=True, null=True)
     website_url = models.CharField(max_length=256, blank=True, null=True)
